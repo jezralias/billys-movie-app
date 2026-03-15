@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Billy's Movie List{% endblock %}</title>
+
+        <!-- Bootstrap 5 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Google Fonts - Bebas Neue -->
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Custom Styles -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+        <style>
+            body {
+                background-color: #000;
+                color: #e0e0e0;
+                font-family: 'Limelight';
+            }
+
+            h1,
+            h2,
+            h3,
+            h5 {
+                font-family: 'Oswald', serif;
+                color: #ffffff;
+            }
+
+            .navbar {
+                background-color: #111 !important;
+            }
+
+            .nav-link,
+            .navbar-brand {
+                color: #fff !important;
+            }
+
+            .nav-link:hover {
+                color: #ff1744 !important;
+            }
+
+            .btn-primary {
+                background-color: #ff1744;
+                border-color: #ff1744;
+            }
+
+            .btn-primary:hover {
+                background-color: #d50000;
+                border-color: #d50000;
+            }
+
+            .btn-outline-primary {
+                border-color: #ff1744;
+                color: #ff1744;
+            }
+
+            .btn-outline-primary:hover {
+                background-color: #ff1744;
+                color: white;
+            }
+
+            .card {
+                background-color: #111;
+                border: 1px solid #333;
+            }
+
+            .card-title {
+                color: #fff;
+            }
+
+            .text-muted {
+                color: #999 !important;
+            }
+
+            .jumbotron {
+                background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://image.tmdb.org/t/p/original/8bZ3GypkH9l4tT8Oa2yQ3bZ76.jpg') center/cover no-repeat;
+                color: white;
+                border-radius: 0.5rem;
+            }
+
+            a {
+                color: #ff1744;
+            }
+
+            a:hover {
+                color: #ff6b6b;
+            }
+
+            footer {
+                color: #666;
+                margin-top: 4rem;
+                padding: 2rem 0;
+                border-top: 1px solid #333;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt="Billy's Movie List" height="60"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/brothers-list">Browse All</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/watchlist">My Watchlist</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/recent-activity">Recent Activity</a></li>
+                        {% if session.user_id %}
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container my-5">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="container mt-3">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            {% block main %}{% endblock %}
+        </main>
+
+        <footer class="text-center">
+            <p>Billy's Curated Movie List — A tribute to great cinema</p>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+
+</html>

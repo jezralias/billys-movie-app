@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block title %}My Watchlist{% endblock %}
+
+{% block main %}
+<h2 class="text-center mb-5 display-5" style="color: #ffffff;">
+    My Watchlist ({{ rated_movies|length + unrated_movies|length }} movies)
+</h2>
+
+<!-- Top Rated -->
+{% if top_rated %}
+<h3 class="text-center mb-4" style="color: #ffd700;">My Top Rated</h3>
+<div class="row mb-5">
+    {% for movie in top_rated %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 border-gold shadow-lg">
+            {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x450?text=No+Poster" class="card-img-top">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">{{ movie.title }} ({{ movie.year|default("N/A") }})</h5>
+                <p class="text-center mt-auto">
+                    <strong style="color: #ffd700; font-size: 1.5rem;">{{ movie.rating }}/10 ⭐</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<hr class="my-5 border-secondary">
+{% endif %}
+
+<!-- All Rated Movies -->
+{% if rated_movies %}
+<h3 class="mb-4">Rated Movies ({{ rated_movies|length }})</h3>
+<div class="row mb-5">
+    {% for movie in rated_movies %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100">
+            {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x450?text=No+Poster" class="card-img-top">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ movie.title }} ({{ movie.year|default("N/A") }})</h5>
+                <p class="mt-auto text-center"><strong>{{ movie.rating }}/10</strong></p>
+
+                <form action="/rate" method="post" class="mt-2">
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <div class="input-group">
+                        <select name="rating" class="form-select">
+                            <option value="">Change rating</option>
+                            {% for i in range(1, 11) %}
+                            <option value="{{ i }}" {% if movie.rating == i %}selected{% endif %}>{{ i }}/10</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+
+                <!-- Remove button added here -->
+                <div class="mt-2">
+                    <form action="/remove_from_watchlist" method="post">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">Remove from Watchlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Unrated Movies -->
+{% if unrated_movies %}
+<h3 class="mb-4">Need Rating ({{ unrated_movies|length }})</h3>
+<div class="row">
+    {% for movie in unrated_movies %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 border-secondary">
+            {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+            {% else %}
+            <img src="https://via.placeholder.com/300x450?text=No+Poster" class="card-img-top">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ movie.title }} ({{ movie.year|default("N/A") }})</h5>
+
+                <form action="/rate" method="post" class="mt-auto">
+                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                    <div class="input-group">
+                        <select name="rating" class="form-select">
+                            <option value="">Rate 1-10</option>
+                            {% for i in range(1, 11) %}
+                            <option value="{{ i }}">{{ i }}/10</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Rate</button>
+                    </div>
+                </form>
+
+                <div class="mt-2">
+                    <form action="/remove_from_watchlist" method="post">
+                        <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">Remove from Watchlist</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Empty state -->
+{% if rated_movies|length + unrated_movies|length == 0 %}
+<div class="text-center mt-5">
+    <p>Your watchlist is empty! Start adding movies from the <a href="/brothers-list">full list</a> or <a href="/search">search</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

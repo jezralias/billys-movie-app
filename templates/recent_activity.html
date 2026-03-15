@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Recent Activity{% endblock %}
+
+{% block main %}
+<h2 class="text-center mb-5 display-5" style="color: #ffffff;">
+    Recent Community Activity
+</h2>
+
+{% if recent %}
+<div class="list-group">
+    {% for item in recent %}
+    <div class="list-group-item bg-dark border-secondary mb-3 rounded" style="border-left: 4px solid #ff1744;">
+        <div class="d-flex align-items-center">
+            {% if item.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w92{{ item.poster_path }}" class="rounded me-3" style="width: 60px; height: 90px; object-fit: cover;">
+            {% else %}
+            <div class="bg-secondary rounded me-3" style="width: 60px; height: 90px;"></div>
+            {% endif %}
+            <div class="flex-grow-1">
+                <strong class="text-warning">{{ item.username }}</strong> added
+                <span class="text-danger fw-bold">{{ item.title }} {% if item.year %}({{ item.year }}){% endif %}</span>
+                {% if item.genres %}
+                <br><small class="text-muted">{{ item.genres }}</small>
+                {% endif %}
+            </div>
+            <small class="text-muted text-end">
+                {% if item.added_at %}
+                    {{ item.added_at[:16] | replace("T", " ") }}
+                {% else %}
+                    Recently
+                {% endif %}
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center text-muted mt-5">
+    <p>No activity yet — be the first to add something!</p>
+</div>
+{% endif %}
+{% endblock %}

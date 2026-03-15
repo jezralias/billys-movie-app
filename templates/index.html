@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+<div class="jumbotron text-center bg-light py-5 mb-5">
+    <h1>Welcome to Billy's Movie List App</h1>
+    <p class="lead">Explore my brother's curated collection of 1300+ classic films</p>
+    <a href="/brothers-list" class="btn btn-primary btn-lg mx-2">Browse All Movies</a>
+    <a href="/search" class="btn btn-secondary btn-lg mx-2">Search by Genre & Decade</a>
+    <a href="/watchlist" class="btn btn-info btn-lg mx-2">My Watchlist ({{ watchlist_count }})</a>
+</div>
+
+<h3 class="mb-4">Recently Added Classics</h3>
+<div class="row">
+    {% for movie in highlighted %}
+    <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100">
+            {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w185{{ movie.poster_path }}" class="card-img-top">
+            {% else %}
+            <img src="https://via.placeholder.com/300x450?text=No+Poster" class="card-img-top">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ movie.title }} ({{ movie.year|default("N/A") }})</h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

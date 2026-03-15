@@ -1,0 +1,220 @@
+/* Billy's Movie List — Purple Cinematic Theme */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #e0e0e0;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background-image: radial-gradient(circle at 50% 50%, rgba(153, 50, 204, 0.1) 0%, transparent 70%);
+}
+
+/* Headings - Heavy distressed feel like logo */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Bebas Neue', 'Impact', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #bb86fc;
+    text-shadow: 0 0 15px rgba(153, 50, 204, 0.8);
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0d0d0d !important;
+    border-bottom: 3px solid #9932cc;
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(153, 50, 204, 0.3);
+}
+
+.navbar-brand img {
+    height: 70px;
+    filter: drop-shadow(0 0 12px #9932cc);
+}
+
+.nav-link {
+    color: #fff !important;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(153, 50, 204, 0.6);
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    color: #bb86fc !important;
+    text-shadow: 0 0 15px rgba(153, 50, 204, 0.9);
+}
+
+/* Cards */
+.card {
+    background-color: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: #9932cc;
+    box-shadow: 0 10px 30px rgba(153, 50, 204, 0.4);
+}
+
+.card-img-top {
+    height: 280px;
+    object-fit: cover;
+    filter: brightness(0.85);
+}
+
+.card-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* Buttons - Purple primary */
+.btn-primary {
+    background-color: #9932cc;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: #bb86fc;
+    box-shadow: 0 0 15px rgba(153, 50, 204, 0.6);
+}
+
+.btn-outline-primary {
+    border-color: #bb86fc;
+    color: #bb86fc;
+    font-weight: bold;
+}
+
+.btn-outline-primary:hover {
+    background-color: #bb86fc;
+    color: #000;
+}
+
+/* Top Rated emphasis */
+.border-primary {
+    border-color: #bb86fc !important;
+    border-width: 4px !important;
+    box-shadow: 0 0 20px rgba(153, 50, 204, 0.5);
+}
+
+/* Gold border for Top Rated movies */
+.border-gold {
+    border-color: #ffd700 !important;
+    /* Classic gold */
+    border-width: 4px !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.border-gold:hover {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+/* Text */
+.text-muted {
+    color: #999 !important;
+}
+
+/* Links */
+a {
+    color: #bb86fc;
+}
+
+a:hover {
+    color: #fff;
+}
+
+/* Jumbotron/Home Hero */
+.jumbotron {
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9));
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 4px solid #9932cc;
+}
+
+.jumbotron h1 {
+    font-size: 3.5rem;
+    color: #bb86fc;
+    text-shadow: 0 0 20px rgba(153, 50, 204, 0.8);
+}
+
+/* Footer */
+footer {
+    background-color: #0d0d0d;
+    color: #666;
+    padding: 2rem 0;
+    margin-top: 5rem;
+    border-top: 2px solid #333;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .jumbotron h1 {
+        font-size: 2.8rem;
+    }
+
+    .card-img-top {
+        height: 240px;
+    }
+
+    .navbar-brand img {
+        height: 55px;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+    }
+}
+
+/* Flash Messages */
+.alert {
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.2);
+    /* Dark green background */
+    color: #a3e635;
+    /* Bright lime text */
+    border-left: 5px solid #a3e635;
+}
+
+.alert-info {
+    background-color: rgba(13, 110, 253, 0.2);
+    /* Dark blue background */
+    color: #93c5fd;
+    border-left: 5px solid #93c5fd;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    /* Dark red background */
+    color: #fca5a5;
+    border-left: 5px solid #fca5a5;
+}
+
+.alert .btn-close {
+    filter: invert(1);
+    /* Makes close button white */
+}

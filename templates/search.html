@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{% block title %}Search Movies{% endblock %}
+
+{% block main %}
+    <h2 class="mb-4">Search Billy's Curated List</h2>
+
+    <form action="/search" method="get" class="mb-5">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Genre</label>
+                <select name="genre" class="form-select">
+                    <option value="">All Genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Animation">Animation</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Crime">Crime</option>
+                    <option value="Documentary">Documentary</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Family">Family</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="History">History</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Music">Music</option>
+                    <option value="Mystery">Mystery</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Science Fiction">Science Fiction</option>
+                    <option value="Thriller">Thriller</option>
+                    <option value="War">War</option>
+                    <option value="Western">Western</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Decade</label>
+                <select name="decade" class="form-select">
+                    <option value="">All Decades</option>
+                    <option value="pre1930">Pre-1930</option>
+                    <option value="1930">1930s</option>
+                    <option value="1940">1940s</option>
+                    <option value="1950">1950s</option>
+                    <option value="1960">1960s</option>
+                    <option value="1970">1970s</option>
+                    <option value="1980">1980s</option>
+                    <option value="1990">1990s</option>
+                    <option value="2000">2000s</option>
+                    <option value="2010">2010s</option>
+                    <option value="2020">2020s</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Director</label>
+                <input type="text" name="director" class="form-control" placeholder="e.g. Fritz Lang" value="{{ request.args.get('director', '') }}">
+            </div>
+            <div class="col-md-12 d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    {% if movies %}
+        <div class="row">
+            {% for movie in movies %}
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100">
+                        {% if movie.poster_path %}
+                            <img src="https://image.tmdb.org/t/p/w185{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x450?text=No+Poster" class="card-img-top">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ movie.title }} ({{ movie.year|default("N/A") }})</h5>
+                            {% if movie.genres %}
+                                <p class="card-text small text-muted mt-auto">{{ movie.genres }}</p>
+                            {% endif %}
+                            <div class="mt-auto pt-3">
+                                <form action="/add_to_watchlist" method="post">
+                                    <input type="hidden" name="movie_id" value="{{ movie.id }}">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm w-100">Add to My Watchlist</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No movies found matching your criteria.</p>
+    {% endif %}
+{% endblock %}
